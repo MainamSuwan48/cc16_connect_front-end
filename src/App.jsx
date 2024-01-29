@@ -1,5 +1,6 @@
 import { useState } from "react";
 import RegisterForm from "./layouts/RegisterForm";
+import LoginForm from "./layouts/LoginForm";
 function App() {
   const [darkMode, setDarkMode] = useState(false);
   return (
@@ -21,6 +22,7 @@ function App() {
           <button className="btn btn-active btn-link">Link</button>
         </div>
         <RegisterForm/>
+        <LoginForm/>
       </div>
     </>
   );
