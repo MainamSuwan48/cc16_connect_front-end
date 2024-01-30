@@ -1,11 +1,15 @@
 import React from "react";
 import axios from "axios";
+import { useAuth } from "../context/AuthContext";
 
 function LoginForm() {
   const [input, setInput] = React.useState({
     code: "",
     password: "",
   });
+
+  const { setUser } = useAuth();
+
   const hdlChangeInput = (e) => {
     console.log(e.target.name);
     console.log(e.target.value);
@@ -23,8 +27,15 @@ function LoginForm() {
     e.preventDefault();
     try {
       const rs = await axios.post("http://localhost:8888/auth/login", loginObj);
-      console.log(rs.data.token)
+      console.log(rs.data.token);
       localStorage.setItem("token", rs.data.token);
+      const rsUser = await axios.get("http://localhost:8888/auth/me", {
+        headers: {
+          Authorization: `Bearer ${rs.data.token}`,
+        },
+      });
+      console.log("*******",rsUser.data)
+      setUser(rsUser.data);
     } catch (err) {
       console.log(err);
     }
@@ -49,6 +60,7 @@ function LoginForm() {
                 name="code"
                 value={input.code}
                 onChange={hdlChangeInput}
+                pattern="^[st]\d{3}$"
               />
             </div>
             <div class="form-control">
