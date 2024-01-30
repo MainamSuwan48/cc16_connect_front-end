@@ -3,7 +3,7 @@ import axios from "axios";
 
 function LoginForm() {
   const [input, setInput] = React.useState({
-    s_code: "",
+    code: "",
     password: "",
   });
   const hdlChangeInput = (e) => {
@@ -13,9 +13,18 @@ function LoginForm() {
   };
 
   const hdlSubmit = async (e) => {
+    let codeFor = input.code.toLocaleLowerCase().startsWith("t")
+      ? "t_code"
+      : "s_code";
+    const loginObj = {
+      [codeFor]: input.code,
+      password: input.password,
+    };
     e.preventDefault();
     try {
-      const rs = await axios.post("http://localhost:8888/auth/login", input);
+      const rs = await axios.post("http://localhost:8888/auth/login", loginObj);
+      console.log(rs.data.token)
+      localStorage.setItem("token", rs.data.token);
     } catch (err) {
       console.log(err);
     }
@@ -30,15 +39,15 @@ function LoginForm() {
           <form class="card-body" onSubmit={hdlSubmit}>
             <div class="form-control">
               <label class="label">
-                <span class="label-text">S Code</span>
+                <span class="label-text">Your Code</span>
               </label>
               <input
                 type="text"
-                placeholder="s_code"
+                placeholder="code"
                 class="input input-bordered"
                 required
-                name="s_code"
-                value={input.s_code}
+                name="code"
+                value={input.code}
                 onChange={hdlChangeInput}
               />
             </div>
