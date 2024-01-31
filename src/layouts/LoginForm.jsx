@@ -41,21 +41,21 @@ function LoginForm() {
     }
   };
   return (
-    <div class="hero min-h-screen bg-base-200">
-      <div class="hero-content flex-col lg:flex-row-reverse">
-        <div class="text-center lg:text-left">
-          <h1 class="text-5xl font-bold">Login now!</h1>
+    <div className="hero min-h-screen bg-base-200">
+      <div className="hero-content flex-col lg:flex-row-reverse">
+        <div className="text-center lg:text-left">
+          <h1 className="text-5xl font-bold">Login now!</h1>
         </div>
-        <div class="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-          <form class="card-body" onSubmit={hdlSubmit}>
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text">Your Code</span>
+        <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+          <form className="card-body" onSubmit={hdlSubmit}>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Your Code</span>
               </label>
               <input
                 type="text"
                 placeholder="code"
-                class="input input-bordered"
+                className="input input-bordered"
                 required
                 name="code"
                 value={input.code}
@@ -63,27 +63,27 @@ function LoginForm() {
                 pattern="^[st]\d{3}$"
               />
             </div>
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text">Password</span>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Password</span>
               </label>
               <input
                 type="password"
                 placeholder="password"
-                class="input input-bordered"
+                className="input input-bordered"
                 required
                 name="password"
                 value={input.password}
                 onChange={hdlChangeInput}
               />
-              <label class="label">
-                <a href="#" class="label-text-alt link link-hover">
+              <label className="label">
+                <a href="#" className="label-text-alt link link-hover">
                   Forgot password?
                 </a>
               </label>
             </div>
-            <div class="form-control mt-6">
-              <button class="btn btn-primary">Login</button>
+            <div className="form-control mt-6">
+              <button className="btn btn-primary">Login</button>
             </div>
           </form>
         </div>

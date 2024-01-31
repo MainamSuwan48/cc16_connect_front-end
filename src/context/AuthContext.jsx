@@ -3,27 +3,39 @@ import { useContext, useState, createContext, useEffect } from "react";
 const AuthContext = createContext("");
 
 function AuthContextProvider(props) {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const run = async () => {
-      let token = localStorage.getItem("token");
-      console.log(token);
-      if (!token) {
-        return;
+      try{
+        setLoading(true);
+        let token = localStorage.getItem("token");
+        if (!token) {
+          return;
+        }
+        const rs = await axios.get("http://localhost:8888/auth/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setUser(rs.data);
+      }catch(err){
+        console.log(err)
+      }finally{
+        setLoading(false);
       }
-      const rs = await axios.get("http://localhost:8888/auth/me", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log(rs.data.user);
-      setUser(rs.data.user);
+
+    
     };
     run();
   }, []);
+  const logout = () => {
+    localStorage.removeItem("token");
+    setUser(null);
+  };
 
-  const [user, setUser] = useState(null);
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ user, setUser, logout ,loading}}>
       {props.children}
     </AuthContext.Provider>
   );

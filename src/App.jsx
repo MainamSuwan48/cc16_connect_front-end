@@ -5,27 +5,15 @@ import { useAuth } from "./context/AuthContext";
 import AppRouter from "./routes/AppRouter";
 function App() {
   const [darkMode, setDarkMode] = useState(false);
-  const { user, setUser } = useAuth;
+  const { loading } = useAuth;
+  if (loading) {
+    return <span className="loading loading-ring loading-lg scale-150"></span>;
+  }
+
   return (
-    <>
-      <div
-        className="min-h-screen"
-        data-theme={darkMode ? "dark" : "cyberpunk"}
-      >
-        <h1 className="text-3xl font-bold underline text-cyan-500">
-          Hello, {user?.firstname}
-        </h1>
-        <input
-          type="checkbox"
-          className="toggle"
-          checked={darkMode}
-          onChange={(e) => {
-            setDarkMode(e.target.checked);
-          }}
-        />
-        <AppRouter />
-      </div>
-    </>
+    <div className="min-h-screen flex flex-col gap-3">
+      <AppRouter />
+    </div>
   );
 }
 
